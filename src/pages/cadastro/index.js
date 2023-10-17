@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useContext, createContext } from "react"
 import { Text, Button, Image, TextInput, View, Switch, TouchableOpacity, StyleSheet } from "react-native"
 
 export default function Register(props) {
@@ -7,6 +7,8 @@ export default function Register(props) {
     const [sexo, setSexo] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    const UserContext = createContext(null);
 
     return (
         <View style={styles.screen}>
