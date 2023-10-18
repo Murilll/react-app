@@ -17,8 +17,10 @@ export default function Login(props) {
             password: password
         }
 
-        if (userExists(users))
-            navigation.navigate("users");
+        console.log(users)
+
+        if (!userExists(users))
+            props.navigation.navigate('users');
         else
             setError(true);
     }
@@ -46,14 +48,11 @@ export default function Login(props) {
                         onChange={(e) => { setPassword(e.target.value); setError(false) }} />
                 </View>
             </View>
-            <View style={{marginTop: '40vh', width: '60vw'}}>
-                <Button onPress={() => onHandleLogin} title="Logar"/>
+            <View style={{ marginTop: '40vh', width: '60vw' }}>
+                <Button onPress={() => onHandleLogin()} title="Logar" />
             </View>
             <TouchableOpacity onPress={() => props.navigation.navigate('cadastro')}>
                 <Text>criar cadastro</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.navigation.navigate('users')}>
-                <Text>users</Text>
             </TouchableOpacity>
         </View>
     )

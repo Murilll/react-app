@@ -19,10 +19,13 @@ export default function Register(props) {
             name: name,
             idade: idade,
             sexo: sexo,
+            not: isEnabled
             email: email,
             senha: senha,
-            not: isEnabled
         }
+
+        console.log(user)
+
         props.navigation.navigate('login')
         await addUser(user);
     }
