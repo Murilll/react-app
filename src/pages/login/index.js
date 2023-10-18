@@ -1,6 +1,33 @@
+import { useContext } from "react";
 import { Text, Button, TextInput, View, StyleSheet, TouchableOpacity } from "react-native"
+import { UserContext } from "../../context/user";
+import users from "../users";
+import { useState } from "react";
 
 export default function Login(props) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const { userExists } = useContext(UserContext);
+
+    const [error, setError] = useState(false);
+    const onHandleLogin = () => {
+        const users = {
+            email: email,
+            password: password
+        }
+
+        if (userExists(users))
+            navigation.navigate("users");
+        else
+            setError(true);
+    }
+
+    const renderError = () => {
+        if (error)
+            return <Text style={{ fontSize: '1rem', color: 'red' }}>Usuário ou senha incorretos.</Text>
+    }
+
     return (
         <View style={styles.screen}>
             <View>
@@ -9,15 +36,19 @@ export default function Login(props) {
             <View style={styles.container}>
                 <View>
                     <Text>Email:</Text>
-                    <TextInput style={{ backgroundColor: 'black' }} />
+                    <TextInput style={{ backgroundColor: '#f1f1f1' }}
+                        onChange={(e) => { setEmail(e.target.value); setError(false) }} />
                 </View>
 
                 <View>
                     <Text>Senha:</Text>
-                    <TextInput style={{ backgroundColor: 'black' }} />
+                    <TextInput style={{ backgroundColor: '#f1f1f1' }}
+                        onChange={(e) => { setPassword(e.target.value); setError(false) }} />
                 </View>
             </View>
-            <Button onPress={() => console.log("foi")} title="Logar"></Button>
+            <View style={{marginTop: '40vh', width: '60vw'}}>
+                <Button onPress={() => onHandleLogin} title="Logar"/>
+            </View>
             <TouchableOpacity onPress={() => props.navigation.navigate('cadastro')}>
                 <Text>criar cadastro</Text>
             </TouchableOpacity>
@@ -37,11 +68,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        fontSize: '4vw',
+        fontSize: '4rem',
         marginBottom: '4vw'
     },
     container: {
-        width: '40vw'
+        width: '90vw'
     }
 });
 
